@@ -30,7 +30,7 @@ $^*$*Corresponding author*: [huy.leminh@phenikaa-uni.edu.vn](mailto:huy.leminh@p
 
 ---
 
-### [📄 Paper (IEEE TAES)](https://doi.org/10.1109/TAES.2026.3709269) • [💡 Key Highlights](#-key-breakthroughs--contributions) • [🧠 Model Architecture](#-21d-cvnet-architecture) • [📊 Quantitative Results](#-benchmarks--edge-performance) • [🚀 Quick Start](#-quick-start) • [📖 Citation](#-citation)
+### [📄 Paper (IEEE TAES)](https://doi.org/10.1109/TAES.2026.3709269) • [💡 Key Highlights](#-key-breakthroughs--contributions) • [🧠 Model Architecture](#-21d-cvnet-architecture) • [📁 Repository](#-repository-structure) • [🚀 Quick Start](#-quick-start) • [📖 Citation](#-citation)
 
 ---
 
@@ -97,45 +97,6 @@ The core $(2+1)\text{D}$ decomposition factors a full complex 3D convolution of 
 2. A subsequent **temporal convolution** $(K_t \times 1 \times 1)$ operating across successive radar frames.
 
 This separation drastically reduces the required parameter count and multiplication operations while capturing both intra-frame radar phase characteristics and inter-frame temporal kinematics.
-
----
-
-## 📊 Benchmarks & Edge Performance
-
-### Comparison with Benchmark Architectures
-
-| Model Architecture | Input Domain | Preprocessing Latency | Inference Latency (Jetson Nano) | Total Latency | Accuracy (%) | Speedup Factor |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Conventional 3D CNN** | FFT (Range-Doppler) | ~35.4 ms | ~28.6 ms | ~64.0 ms | 98.12% | $1.0\times$ (Baseline) |
-| **2D CNN + LSTM** | FFT (Micro-Doppler) | ~22.1 ms | ~14.8 ms | ~36.9 ms | 97.45% | $1.7\times$ |
-| **Real-Valued (2+1)D CNN** | Raw Time-Domain | **0.0 ms** | 4.85 ms | 4.85 ms | 96.20% | $13.2\times$ |
-| **Proposed (2+1)D CVNet** | **Raw Time-Domain** | **0.0 ms (FFT-Free)** | **2.75 ms** | **2.75 ms** | **99.38%** | **$23.3\times$ – $86\times$** |
-
-### Noise Resilience (Classification Accuracy vs. SNR)
-
-| Signal-to-Noise Ratio (SNR) | Clean | $+10\text{ dB}$ | $+5\text{ dB}$ | $0\text{ dB}$ | $-5\text{ dB}$ |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **Conventional FFT 3D CNN** | 98.12% | 94.30% | 88.50% | 79.20% | 68.40% |
-| **Proposed (2+1)D CVNet** | **99.38%** | **98.80%** | **97.65%** | **95.20%** | **92.15%** |
-
----
-
-## 🖐️ Gesture Vocabulary
-
-The dataset encompasses 10 distinct dynamic gesture classes evaluated under clean and noise-perturbed settings:
-
-| Class ID | Gesture Name | Motion Description | Kinetic Axis |
-| :-: | :--- | :--- | :--- |
-| **0** | `Push-down` | Rapid downward palm thrust | Vertical ($Z^-$) |
-| **1** | `Pull-up` | Rapid upward palm lift | Vertical ($Z^+$) |
-| **2** | `Counter-Clockwise` | Circular hand rotation in CCW direction | Angular ($\theta^+$) |
-| **3** | `Clockwise` | Circular hand rotation in CW direction | Angular ($\theta^-$) |
-| **4** | `Zoom-in` | Two-finger / dual-palm contracting squeeze | Radial inward ($r^-$) |
-| **5** | `Zoom-out` | Dual-palm expanding outward spread | Radial outward ($r^+$) |
-| **6** | `To-left` | Horizontal swipe from right to left | Lateral ($X^+$) |
-| **7** | `To-right` | Horizontal swipe from left to right | Lateral ($X^-$) |
-| **8** | `No gesture` | Stationary hand / idle ambient background | Null |
-| **9** | `Unknown gesture` | Out-of-distribution / irregular gestures | OOD |
 
 ---
 
