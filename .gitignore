@@ -7,11 +7,36 @@ __pycache__/
 build/
 dist/
 *.egg-info/
+.eggs/
 
 # Virtual environments
 venv/
 .venv/
 env/
+
+# Testing, linting & typing caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Datasets (raw recordings are distributed on request, never committed)
+data/**
+!data/README.md
+
+# Training artifacts
+runs/
+logs/
+wandb/
+*.log
+# Released checkpoints are tracked; local training runs are not.
+checkpoints/run_*/
+
+# Notebooks
+.ipynb_checkpoints/
 
 # IDE / OS
 .vscode/

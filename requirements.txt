@@ -1,0 +1,21 @@
+# Pinned runtime dependencies.
+#
+# For development use `pip install -e ".[dev]"`, which additionally installs
+# pytest, ruff and mypy. The upper bound on TensorFlow is required by
+# keras-complex, which has not been ported to Keras 3.
+
+# Deep learning & complex-valued layers
+tensorflow>=2.12.0,<2.16.0
+tensorflow-probability>=0.20.0
+keras-complex>=0.0.1
+
+# Numerical computing
+numpy>=1.23.0,<2.0.0
+scipy>=1.10.0
+scikit-learn>=1.2.0
+
+# Visualization
+matplotlib>=3.7.0
+
+# Configuration
+PyYAML>=6.0.0

@@ -1,0 +1,13 @@
+# Deep Ensemble Learning (DEL) evaluation over the released ensemble members.
+#
+#   cvradar evaluate --config configs/deep_ensemble.yaml
+#   cvradar evaluate --config configs/deep_ensemble.yaml \
+#       --split noise --noise-type AWGN_SNR_-5
+
+uncertainty:
+  method: deep_ensemble
+  ensemble_dir: checkpoints/deep_ensemble
+  calibration_bins: 10
+
+data:
+  batch_size: 16   # 10 members held in memory at once

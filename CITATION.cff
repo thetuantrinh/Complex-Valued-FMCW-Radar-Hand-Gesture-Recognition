@@ -1,0 +1,66 @@
+cff-version: 1.2.0
+title: >-
+  Complex-Valued (2+1)D Convolutional Neural Networks for Real-Time Hand
+  Gesture Recognition on Edge Devices With FMCW Radar
+message: >-
+  If you use this software or the (2+1)D CVNet architecture, please cite both
+  the software and the article below.
+type: software
+license: MIT
+repository-code: >-
+  https://github.com/thetuantrinh/Complex-Valued-FMCW-Radar-Hand-Gesture-Recognition
+authors:
+  - family-names: Trinh
+    given-names: The Tuan
+    affiliation: Phenikaa University, Hanoi, Vietnam
+  - family-names: Tan
+    given-names: Phan Xuan
+    orcid: https://orcid.org/0000-0002-9592-0226
+    affiliation: Shibaura Institute of Technology, Tokyo, Japan
+  - family-names: Van
+    given-names: Khai Nguyen
+    orcid: https://orcid.org/0009-0007-2802-541X
+    affiliation: Phenikaa University, Hanoi, Vietnam
+  - family-names: Tram
+    given-names: Pham Vu Bao
+    orcid: https://orcid.org/0009-0009-7924-5484
+    affiliation: Phenikaa University, Hanoi, Vietnam
+  - family-names: Nguyen
+    given-names: Xuanque
+    orcid: https://orcid.org/0009-0001-2635-6553
+    affiliation: Phenikaa University, Hanoi, Vietnam
+  - family-names: Dang
+    given-names: Khoa Nguyen
+    orcid: https://orcid.org/0000-0002-6525-5245
+    affiliation: Vietnam National University (VNU-IS), Hanoi, Vietnam
+  - family-names: Le
+    given-names: Minhhuy
+    orcid: https://orcid.org/0000-0001-6152-6215
+    affiliation: Phenikaa University, Hanoi, Vietnam
+    email: huy.leminh@phenikaa-uni.edu.vn
+preferred-citation:
+  type: article
+  title: >-
+    Complex-Valued (2+1)D Convolutional Neural Networks for Real-Time Hand
+    Gesture Recognition on Edge Devices With FMCW Radar
+  journal: IEEE Transactions on Aerospace and Electronic Systems
+  year: 2026
+  volume: 62
+  start: 13147
+  end: 13156
+  doi: 10.1109/TAES.2026.3709269
+  authors:
+    - family-names: Trinh
+      given-names: The Tuan
+    - family-names: Tan
+      given-names: Phan Xuan
+    - family-names: Van
+      given-names: Khai Nguyen
+    - family-names: Tram
+      given-names: Pham Vu Bao
+    - family-names: Nguyen
+      given-names: Xuanque
+    - family-names: Dang
+      given-names: Khoa Nguyen
+    - family-names: Le
+      given-names: Minhhuy

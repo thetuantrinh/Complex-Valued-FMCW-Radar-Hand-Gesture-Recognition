@@ -1,0 +1,98 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cvradar"
+version = "1.0.0"
+description = "Complex-valued (2+1)D CNNs for real-time FMCW radar hand-gesture recognition on edge devices"
+readme = "README.md"
+requires-python = ">=3.8,<3.11"
+license = { file = "LICENSE" }
+keywords = [
+    "complex-valued neural networks",
+    "deep learning",
+    "edge ai",
+    "fmcw radar",
+    "hand gesture recognition",
+    "uncertainty quantification",
+]
+authors = [
+    { name = "The Tuan Trinh", email = "tuan.trinhthe@phenikaa-uni.edu.vn" },
+    { name = "Minhhuy Le", email = "huy.leminh@phenikaa-uni.edu.vn" },
+]
+maintainers = [
+    { name = "The Tuan Trinh", email = "tuan.trinhthe@phenikaa-uni.edu.vn" },
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "tensorflow>=2.12.0,<2.16.0",
+    "tensorflow-probability>=0.20.0",
+    "keras-complex>=0.0.1",
+    "numpy>=1.23.0,<2.0.0",
+    "scipy>=1.10.0",
+    "scikit-learn>=1.2.0",
+    "matplotlib>=3.7.0",
+    "PyYAML>=6.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.4.0",
+    "mypy>=1.8.0",
+]
+
+[project.scripts]
+cvradar = "cvradar.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/thetuantrinh/Complex-Valued-FMCW-Radar-Hand-Gesture-Recognition"
+Paper = "https://doi.org/10.1109/TAES.2026.3709269"
+Issues = "https://github.com/thetuantrinh/Complex-Valued-FMCW-Radar-Hand-Gesture-Recognition/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+addopts = "-ra --strict-markers --strict-config"
+markers = [
+    "requires_tensorflow: test needs TensorFlow and keras-complex installed",
+]
+
+[tool.ruff]
+line-length = 90
+src = ["src", "tests"]
+target-version = "py38"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "C4", "SIM", "D"]
+ignore = [
+    "D203",  # conflicts with D211
+    "D213",  # conflicts with D212
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["D100", "D103"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.mypy]
+python_version = "3.9"
+files = ["src/cvradar"]
+ignore_missing_imports = true
+warn_unused_ignores = true

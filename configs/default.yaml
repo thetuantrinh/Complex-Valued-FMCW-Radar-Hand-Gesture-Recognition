@@ -1,0 +1,48 @@
+# Default (2+1)D CVNet experiment, matching the published configuration.
+#
+#   cvradar train --config configs/default.yaml
+#
+# Leave data.root null to take the dataset location from $CVRADAR_DATA_ROOT.
+
+radar:
+  frames: 20        # slow-time radar frames per gesture
+  chirps: 128       # chirps per frame
+  samples: 64       # fast-time ADC samples per chirp
+  rx_antennas: 4    # -> 8 channels (I and Q per antenna)
+
+data:
+  root: null
+  train_subdir: train
+  valid_subdir: valid
+  noise_subdir: noise
+  sample_glob: "*/*/*.npy"
+  batch_size: 32
+  shuffle_buffer: null
+  seed: 1337
+
+model:
+  num_classes: 10
+  stem_filters: 4
+  stem_strides: [1, 2, 1]
+  block_filters: [4, 4, 8, 8]
+  kernel_size: [3, 3, 2]   # (time, chirp, sample)
+  pool_size: [2, 2, 2]
+  dropout_rate: 0.05
+  mc_dropout: true         # keep dropout stochastic at inference
+
+training:
+  epochs: 100
+  learning_rate: 0.001
+  patience: 5
+  min_learning_rate: 1.0e-9
+  lr_factor: 0.1
+  early_stopping: false
+  checkpoint_dir: checkpoints
+  tensorboard_dir: null
+  verbose: 1
+
+uncertainty:
+  method: mc_dropout       # mc_dropout | deep_ensemble
+  num_samples: 50
+  ensemble_dir: checkpoints/deep_ensemble
+  calibration_bins: 10

@@ -30,7 +30,7 @@ $^*$*Corresponding author*: [huy.leminh@phenikaa-uni.edu.vn](mailto:huy.leminh@p
 
 ---
 
-### [📄 Paper (IEEE TAES)](https://doi.org/10.1109/TAES.2026.3709269) • [💡 Key Highlights](#-key-breakthroughs--contributions) • [🧠 Model Architecture](#-21d-cvnet-architecture) • [📁 Repository](#-repository-structure) • [🚀 Quick Start](#-quick-start) • [📖 Citation](#-citation)
+### [📄 Paper (IEEE TAES)](https://doi.org/10.1109/TAES.2026.3709269) • [💡 Key Highlights](#-key-breakthroughs--contributions) • [🧠 Model Architecture](#-21d-cvnet-architecture) • [📁 Repository](#-repository-structure) • [🚀 Quick Start](#-quick-start) • [🧪 Development](#-development) • [📖 Citation](#-citation)
 
 ---
 
@@ -64,19 +64,19 @@ Extensive experimental evaluations demonstrate that **(2+1)D CVNet achieves 99.3
                                         │
                                         ▼
    ┌────────────────────────────────────────────────────────────────────────────────┐
-   │ (2+1)D Complex-Valued Convolution (CV_Conv2Plus1D)                             │
-   │  ├─ Spatial Decomposition: ComplexConv3D with Kernel (1, K_chirp, K_sample)   │
-   │  └─ Temporal Decomposition: ComplexConv3D with Kernel (K_time, 1, 1)          │
+   │ (2+1)D Complex-Valued Convolution (complex_conv_2plus1d)                       │
+   │  ├─ Spatial Decomposition: ComplexConv3D with Kernel (1, K_chirp, K_sample)    │
+   │  └─ Temporal Decomposition: ComplexConv3D with Kernel (K_time, 1, 1)           │
    └────────────────────────────────────┬───────────────────────────────────────────┘
                                         ▼
    ┌────────────────────────────────────────────────────────────────────────────────┐
-   │ Complex Batch Normalization (ComplexBatchNormalization) + Complex ReLU        │
+   │ Complex Batch Normalization (ComplexBatchNormalization) + Complex ReLU         │
    └────────────────────────────────────┬───────────────────────────────────────────┘
                                         ▼
    ┌────────────────────────────────────────────────────────────────────────────────┐
    │ 4× Residual Blocks with Complex Identity / Projection Shortcuts                │
-   │  ├─ Residual Block 1 & 2: 4 Complex Filters (Kernel: 3×3×2)                   │
-   │  └─ Residual Block 3 & 4: 8 Complex Filters (Kernel: 3×3×2)                   │
+   │  ├─ Residual Block 1 & 2: 4 Complex Filters (Kernel: 3×3×2)                    │
+   │  └─ Residual Block 3 & 4: 8 Complex Filters (Kernel: 3×3×2)                    │
    └────────────────────────────────────┬───────────────────────────────────────────┘
                                         ▼
    ┌────────────────────────────────────────────────────────────────────────────────┐
@@ -84,11 +84,11 @@ Extensive experimental evaluations demonstrate that **(2+1)D CVNet achieves 99.3
    └────────────────────────────────────┬───────────────────────────────────────────┘
                                         ▼
    ┌────────────────────────────────────────────────────────────────────────────────┐
-   │ Monte Carlo Dropout (p = 0.05, training=True for Epistemic Sampling)          │
+   │ Monte Carlo Dropout (p = 0.05, training=True for Epistemic Sampling)           │
    └────────────────────────────────────┬───────────────────────────────────────────┘
                                         ▼
    ┌────────────────────────────────────────────────────────────────────────────────┐
-   │ Complex Dense Classifier ──► Softmax Probabilities & Uncertainty Variance     │
+   │ Complex Dense Classifier ──► Softmax Probabilities & Uncertainty Variance      │
    └────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -104,82 +104,137 @@ This separation drastically reduces the required parameter count and multiplicat
 
 ```text
 Complex-Valued-FMCW-Radar-Hand-Gesture-Recognition/
-├── Datasets/
-│   └── README.md                      # Dataset acquisition protocol & subject partition details
-├── scripts/
-│   ├── network/
-│   │   ├── CV_3DNet.py                # Native (2+1)D CVNet architecture & Complex-Valued layers
-│   │   ├── CV_3DNet_Structure.png     # Graphical network architecture diagram
-│   │   └── __init__.py
-│   ├── models/                        # Pre-trained model weights
-│   │   ├── Deep Ensembles Learing/    # 10 ensemble model checkpoints for epistemic variance
-│   │   └── MC-D/                      # Monte Carlo Dropout model checkpoint
-│   ├── utils/
-│   │   ├── load_dataset.py            # Clean validation dataset loader
-│   │   ├── load_noise_dataset.py      # Noise-corrupted dataset loader (AWGN SNR validation)
-│   │   ├── Uncertainty_Metrics.py     # Expected Calibration Error (ECE) & Negative Log-Likelihood
-│   │   ├── utils_plots.py             # Confusion matrix & accuracy curves visualization
-│   │   ├── callbacks.py               # Training callbacks and learning rate schedules
-│   │   └── __init__.py
-│   └── requirements.txt               # Dependency specifications (TensorFlow, Keras-Complex, etc.)
-├── .gitignore
-├── LICENSE                            # MIT License
-└── README.md                          # Primary documentation
+├── src/cvradar/                      # Installable Python package
+│   ├── config.py                     # Typed, validated experiment configuration
+│   ├── cli.py                        # `cvradar {train,evaluate,summary}` entry point
+│   ├── data/
+│   │   ├── labels.py                 # Canonical gesture vocabulary & label encoding
+│   │   └── loaders.py                # tf.data pipelines (clean + noise-corrupted)
+│   ├── models/
+│   │   ├── layers.py                 # Complex-valued (2+1)D convolution & residual blocks
+│   │   └── cv_net.py                 # (2+1)D CVNet architecture
+│   ├── training/
+│   │   ├── callbacks.py              # LR schedule, checkpointing, TensorBoard
+│   │   └── trainer.py                # Training loop & run artifacts
+│   ├── evaluation/
+│   │   ├── metrics.py                # Expected Calibration Error & NLL
+│   │   ├── uncertainty.py            # MC Dropout, Deep Ensembles, entropy decomposition
+│   │   └── evaluate.py               # Evaluation driver
+│   └── viz/
+│       └── plots.py                  # Confusion matrix, training curves, reliability diagram
+├── configs/
+│   ├── default.yaml                  # Published configuration
+│   └── deep_ensemble.yaml            # Deep Ensemble evaluation preset
+├── checkpoints/
+│   ├── deep_ensemble/                # 10 ensemble members for epistemic variance
+│   └── mc_dropout/                   # Monte Carlo Dropout model
+├── tests/                            # pytest suite (TF-dependent tests skip cleanly)
+├── data/
+│   └── README.md                     # Acquisition protocol & subject partitioning
+├── docs/assets/                      # Architecture diagram
+├── .github/workflows/ci.yml          # Lint + test continuous integration
+├── pyproject.toml                    # Package metadata, ruff, mypy & pytest config
+├── requirements.txt                  # Pinned runtime dependencies
+├── LICENSE                           # MIT License
+└── README.md
 ```
 
 ---
 
 ## 🚀 Quick Start
 
-### 1. Environment Setup
+### 1. Installation
 
-Clone this repository and set up a Python 3.8–3.10 virtual environment:
+The code targets **Python 3.8–3.10** (an upper bound inherited from
+`tensorflow < 2.16`, which `keras-complex` requires).
 
 ```bash
 git clone https://github.com/thetuantrinh/Complex-Valued-FMCW-Radar-Hand-Gesture-Recognition.git
 cd Complex-Valued-FMCW-Radar-Hand-Gesture-Recognition
 
-# Create virtual environment
-conda create -n cv_radar python=3.9 -y
-conda activate cv_radar
+conda create -n cvradar python=3.9 -y
+conda activate cvradar
 
-# Install dependencies
-pip install -r scripts/requirements.txt
+pip install -e .            # add [dev] for the test and lint tooling
 ```
 
-### 2. Instantiate the (2+1)D CVNet Model
+### 2. Point the code at your dataset
+
+Nothing in the package hardcodes a dataset path. Set the root once:
+
+```bash
+export CVRADAR_DATA_ROOT=/path/to/dataset
+```
+
+…or set `data.root` in a config file, or pass `--data-root` on the command line.
+The expected layout is `<root>/<split>/<subject>/<gesture>/<sample>.npy`; see
+[data/README.md](data/README.md).
+
+### 3. Command line
+
+```bash
+# Inspect the architecture and parameter count
+cvradar summary
+
+# Train from scratch
+cvradar train --config configs/default.yaml
+
+# Evaluate the released Monte Carlo Dropout model
+cvradar evaluate --model checkpoints/mc_dropout/run_20250510_101611
+
+# Evaluate the Deep Ensemble under -5 dB AWGN
+cvradar evaluate --config configs/deep_ensemble.yaml \
+                 --split noise --noise-type AWGN_SNR_-5
+```
+
+Every run writes its SavedModel, resolved configuration and training history
+into a timestamped directory under `checkpoints/`.
+
+### 4. Python API
 
 ```python
-import sys
-sys.path.insert(0, "scripts")
+from cvradar.config import ExperimentConfig
+from cvradar.models.cv_net import build_cv_net
 
-from network.CV_3DNet import CV_Net
+config = ExperimentConfig.from_yaml("configs/default.yaml")
 
-# Input format: [Batch, Time (20), Chirps (128), Samples (64), Channels (8)]
-# Channels (8) = 4 RX antennas * 2 (Real/Imaginary components)
-model = CV_Net(input_shape=[None, 20, 128, 64, 8], output_shape=10)
+# Input: [Batch, Frames (20), Chirps (128), Samples (64), Channels (8)]
+# Channels = 4 RX antennas x 2 (real / imaginary)
+model = build_cv_net(config.radar, config.model)
 model.summary()
 ```
 
-### 3. Evaluating Pretrained Checkpoints with Uncertainty
+Uncertainty-aware inference with the released checkpoints:
 
 ```python
 import tensorflow as tf
-from utils.Uncertainty_Metrics import Uncertainty_Metrics
-from utils.load_dataset import load_data
 
-# Load clean validation dataset
-val_loader = load_data(batch_size=32)
+from cvradar.data.loaders import load_split
+from cvradar.evaluation.metrics import UncertaintyMetrics
+from cvradar.evaluation.uncertainty import mc_dropout_predict, mutual_information
 
-# Load pre-trained Monte Carlo Dropout model
-model = tf.keras.models.load_model("scripts/models/MC-D/20250510_101611")
+model = tf.keras.models.load_model("checkpoints/mc_dropout/run_20250510_101611")
+dataset = load_split("valid", config.data, config.radar)
 
-# Compute predictions and calibration metrics
-for x_val, y_val in val_loader.take(1):
-    logits = model(x_val, training=True)
-    metrics = Uncertainty_Metrics(x_val, y_val, logits)
-    print(f"Expected Calibration Error (ECE): {metrics._ECE().numpy():.4f}")
-    print(f"Negative Log-Likelihood (NLL):    {metrics._NLL().numpy():.4f}")
+features, labels = next(iter(dataset))
+mean_probs, samples = mc_dropout_predict(model, features, num_samples=50)
+
+metrics = UncertaintyMetrics(tf.math.log(mean_probs), labels)
+print(metrics.summary())  # accuracy, ECE, NLL
+print("epistemic:", float(tf.reduce_mean(mutual_information(samples))))
+```
+
+---
+
+## 🧪 Development
+
+```bash
+pip install -e ".[dev]"
+
+pytest                 # test suite; TF-dependent tests skip if TF is absent
+ruff check .           # lint
+ruff format .          # format
+mypy                   # type check
 ```
 
 ---
@@ -192,7 +247,7 @@ The experimental dataset contains raw FMCW radar time-domain ADC recordings capt
 
 > [!NOTE]  
 > Due to storage capacity considerations, the raw dataset archives are available upon academic request.  
-> Please contact **Dr. Minhhuy Le** ([huy.leminh@phenikaa-uni.edu.vn](mailto:huy.leminh@phenikaa-uni.edu.vn)) or consult [Datasets/README.md](Datasets/README.md).
+> Please contact **Dr. Minhhuy Le** ([huy.leminh@phenikaa-uni.edu.vn](mailto:huy.leminh@phenikaa-uni.edu.vn)) or consult [data/README.md](data/README.md).
 
 ---
 
