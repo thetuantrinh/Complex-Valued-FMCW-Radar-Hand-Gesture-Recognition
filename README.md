@@ -22,10 +22,10 @@ DOI: [10.1109/TAES.2026.3709269](https://doi.org/10.1109/TAES.2026.3709269)
 
 [**The Tuan Trinh**](https://github.com/thetuantrinh)$^1$ · [**Phan Xuan Tan**](https://orcid.org/0000-0002-9592-0226)$^2$ · [**Khai Nguyen Van**](https://orcid.org/0009-0007-2802-541X)$^1$ · [**Pham Vu Bao Tram**](https://orcid.org/0009-0009-7924-5484)$^1$ · [**Xuanque Nguyen**](https://orcid.org/0009-0001-2635-6553)$^3$ · [**Khoa Nguyen Dang**](https://orcid.org/0000-0002-6525-5245)$^4$ · [**Minhhuy Le**](https://orcid.org/0000-0001-6152-6215)$^{1,*}$
 
-*$^1$ Faculty of Electrical and Electronic Engineering, Phenikaa School of Engineering, Phenikaa University, Hanoi, Vietnam*  
-*$^2$ College of Engineering, Shibaura Institute of Technology, Tokyo, Japan*  
-*$^3$ Faculty of Information System, Phenikaa School of Computing, Phenikaa University, Hanoi, Vietnam*  
-*$^4$ Faculty of Engineering and Technology, International School, Vietnam National University (VNU-IS), Hanoi, Vietnam*  
+$^1$*Faculty of Electrical and Electronic Engineering, Phenikaa School of Engineering, Phenikaa University, Hanoi, Vietnam*  
+$^2$*College of Engineering, Shibaura Institute of Technology, Tokyo, Japan*  
+$^3$*Faculty of Information System, Phenikaa School of Computing, Phenikaa University, Hanoi, Vietnam*  
+$^4$*Faculty of Engineering and Technology, International School, Vietnam National University (VNU-IS), Hanoi, Vietnam*  
 $^*$*Corresponding author*: [huy.leminh@phenikaa-uni.edu.vn](mailto:huy.leminh@phenikaa-uni.edu.vn)
 
 ---
